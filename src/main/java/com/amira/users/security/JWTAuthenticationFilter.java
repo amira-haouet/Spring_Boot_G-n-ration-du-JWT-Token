@@ -21,6 +21,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private AuthenticationManager authenticationManager;
 
@@ -73,7 +75,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 				withArrayClaim("roles", roles.toArray(new String[roles.size()]))
 				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 24 * 60 * 60 * 1000))
-				.sign(Algorithm.HMAC256("nadhemb@yahoo.com"));
+				.sign(Algorithm.HMAC256("haouetamira@gmail.com"));
 		response.addHeader("Authorization", jwt);
 	}
 }

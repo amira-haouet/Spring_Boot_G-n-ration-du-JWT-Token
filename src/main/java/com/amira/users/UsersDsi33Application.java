@@ -36,9 +36,9 @@ public class UsersDsi33Application {
 		userService.addRoleToUser("amira", "USER");
 		userService.addRoleToUser("xxxx", "USER");
 	}
-
+*/
 	@Bean
 	BCryptPasswordEncoder getBCE() {
 		return new BCryptPasswordEncoder();
-	}*/
+	}
 }
