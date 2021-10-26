@@ -6,13 +6,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.1.RELEASE</version>
+		<version>2.5.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.amira</groupId>
 	<artifactId>user_microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>users_DSI33</name>
+	<name>users_microservice</name>
 	<description>Projet Spring Security Génération du JWT Token</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -21,10 +21,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -56,19 +52,17 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
 		<dependency>
-
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 			<version>3.4.1</version>
-
 		</dependency>
-
-
 		
 	</dependencies>
 
@@ -88,5 +82,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	</project>
 
-</project>

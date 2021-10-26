@@ -11,16 +11,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
 	@Autowired
 	UserDetailsService userDetailsService;
-
 	@Autowired
-	BCryptPasswordEncoder bCrypyPasswordEncoder;
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(bCrypyPasswordEncoder);
+		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+
 	}
 
 	@Override
@@ -29,6 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.authorizeRequests().antMatchers("/login").permitAll();
 		http.authorizeRequests().anyRequest().authenticated();
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager()));
+		http.addFilter(new JWTAuthenticationFilter (authenticationManager())) ;
 	}
 }
