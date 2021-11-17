@@ -16,15 +16,18 @@ import com.amira.users.service.UserService;
 public class UsersDsi33Application {
 	@Autowired
 	UserService userService;
-
+	@Bean
+	BCryptPasswordEncoder getBCE() {
+		return new BCryptPasswordEncoder();
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(UsersDsi33Application.class, args);
 	}
-/*
-	@PostConstruct
+
+	/*@PostConstruct
 	void init_users() {
 		// ajouter les rôles
-		userService.addRole(new Role(null, "ADMIN"));
+	/*	userService.addRole(new Role(null, "ADMIN"));
 		userService.addRole(new Role(null, "USER"));
 		// ajouter les users
 		userService.saveUser(new User(null, "admin", "123", true, null));
@@ -35,10 +38,7 @@ public class UsersDsi33Application {
 		userService.addRoleToUser("admin", "USER");
 		userService.addRoleToUser("amira", "USER");
 		userService.addRoleToUser("xxxx", "USER");
-	}
-*/
-	@Bean
-	BCryptPasswordEncoder getBCE() {
-		return new BCryptPasswordEncoder();
-	}
+	}*/
+	/*}
+	*/
 }
