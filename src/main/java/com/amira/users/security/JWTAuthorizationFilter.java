@@ -17,7 +17,6 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
 @Override
 protected void doFilterInternal(HttpServletRequest request,
@@ -43,7 +42,9 @@ Collection <GrantedAuthority> authorities = new
 ArrayList<GrantedAuthority>();
 for (String r : roles)
 authorities.add(new SimpleGrantedAuthority(r));
-UsernamePasswordAuthenticationToken user =new UsernamePasswordAuthenticationToken(username,null,authorities);
+UsernamePasswordAuthenticationToken user =
+
+new UsernamePasswordAuthenticationToken(username,null,authorities);
 SecurityContextHolder.getContext().setAuthentication(user);
 filterChain.doFilter(request, response);
 }

@@ -21,59 +21,61 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	private AuthenticationManager authenticationManager;
+public class JWTAuthenticationFilter extends
+UsernamePasswordAuthenticationFilter{
+private AuthenticationManager authenticationManager;public JWTAuthenticationFilter(AuthenticationManager authenticationManager)
+{
 
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+super();
+this.authenticationManager = authenticationManager;
+}
+@Override
+public Authentication attemptAuthentication(HttpServletRequest request,
+HttpServletResponse response)
 
-		super();
-		this.authenticationManager = authenticationManager;
-	}
+throws AuthenticationException {
+User user =null;
+try {
+user = new ObjectMapper().readValue(request.getInputStream(),
 
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+User.class);
 
-			throws AuthenticationException {
-		User user = null;
-		try {
-			user = new ObjectMapper().readValue(request.getInputStream(),
+} catch (JsonParseException e) {
+e.printStackTrace();
+} catch (JsonMappingException e) {
+e.printStackTrace();
+} catch (IOException e) {
+e.printStackTrace();
+}
+return authenticationManager.
+authenticate(new
 
-					User.class);
+UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+}
+@Override
+protected void successfulAuthentication(HttpServletRequest request,
+HttpServletResponse response, FilterChain chain,
 
-		} catch (JsonParseException e) {
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return authenticationManager.authenticate(new
+Authentication authResult) throws IOException, ServletException
 
-		UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
-	}
+{
 
-	@Override
-	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+org.springframework.security.core.userdetails.User springUser =
+(org.springframework.security.core.userdetails.User)
 
-			Authentication authResult) throws IOException, ServletException
+authResult.getPrincipal();
 
-	{
+List<String> roles = new ArrayList<>();
+springUser.getAuthorities().forEach(au-> {
+roles.add(au.getAuthority());
+});
+String jwt = JWT.create().
 
-		org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User)
+withSubject(springUser.getUsername()).
 
-		authResult.getPrincipal();
-
-		List<String> roles = new ArrayList<>();
-		springUser.getAuthorities().forEach(au -> {
-			roles.add(au.getAuthority());
-		});
-		String jwt = JWT.create().
-
-				withSubject(springUser.getUsername()).
-
-				withArrayClaim("roles", roles.toArray(new String[roles.size()]))
-				.withExpiresAt(new Date(System.currentTimeMillis() + 10 * 24 * 60 * 60 * 1000))
-				.sign(Algorithm.HMAC256("haouetamira@gmail.com"));
-		response.addHeader("Authorization", jwt);
-	}
+withArrayClaim("roles", roles.toArray(new String[roles.size()])).
+withExpiresAt(new Date(System.currentTimeMillis()+10*24*60*60*1000)).
+sign(Algorithm.HMAC256("haouetamira@gmail.com"));
+response.addHeader("Authorization", jwt);
+}
 }
